@@ -26,6 +26,16 @@ namespace FlangeConnection
 
             createRadioBtnMaterial("Сталь");
             createRadioBtnMaterial("Чугун");
+            createRadioBtnMaterial("Чугун");
+            createRadioBtnMaterial("Чугун");
+            createRadioBtnMaterial("Чугун");
+            createRadioBtnMaterial("Чугун");
+            createRadioBtnMaterial("Чугун");
+            createRadioBtnMaterial("Чугун");
+            createRadioBtnMaterial("Чугун");
+            createRadioBtnMaterial("Чугун");
+            createRadioBtnMaterial("Чугун");
+            createRadioBtnMaterial("Чугун");
 
             buExit.Click += (s, e) => Application.Exit();
             
@@ -36,11 +46,11 @@ namespace FlangeConnection
         {
             RadioButton temp = new RadioButton();
             temp.Text = text;
-            temp.Location = new Point(10, 20 * index);
+            temp.Location = new Point(15, 25 * index);
             temp.Name = $"radioButton{index}";
             temp.BackColor = Color.FromName("#D7D5D5");
 
-            groupBoxMaterial.Controls.Add(temp);
+            panelMaterial.Controls.Add(temp);
             index++;
         }
     }

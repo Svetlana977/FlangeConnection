@@ -37,7 +37,6 @@ namespace FlangeConnection
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.guna2Button5 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Button4 = new Guna.UI2.WinForms.Guna2Button();
-            this.groupBoxMaterial = new Guna.UI2.WinForms.Guna2GroupBox();
             this.guna2VSeparator1 = new Guna.UI2.WinForms.Guna2VSeparator();
             this.guna2HtmlLabel7 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.guna2HtmlLabel6 = new Guna.UI2.WinForms.Guna2HtmlLabel();
@@ -51,6 +50,7 @@ namespace FlangeConnection
             this.guna2ShadowPanel1 = new Guna.UI2.WinForms.Guna2ShadowPanel();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.guna2HtmlLabel3 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.panelMaterial = new Guna.UI2.WinForms.Guna2ShadowPanel();
             this.guna2GradientPanel1.SuspendLayout();
             this.guna2Panel1.SuspendLayout();
             this.guna2Panel2.SuspendLayout();
@@ -133,9 +133,9 @@ namespace FlangeConnection
             // guna2Panel1
             // 
             this.guna2Panel1.BorderColor = System.Drawing.Color.Black;
+            this.guna2Panel1.Controls.Add(this.panelMaterial);
             this.guna2Panel1.Controls.Add(this.guna2Button5);
             this.guna2Panel1.Controls.Add(this.guna2Button4);
-            this.guna2Panel1.Controls.Add(this.groupBoxMaterial);
             this.guna2Panel1.Controls.Add(this.guna2VSeparator1);
             this.guna2Panel1.Controls.Add(this.guna2HtmlLabel7);
             this.guna2Panel1.Controls.Add(this.guna2HtmlLabel6);
@@ -163,7 +163,7 @@ namespace FlangeConnection
             this.guna2Button5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.guna2Button5.ForeColor = System.Drawing.Color.Black;
             this.guna2Button5.HoverState.Parent = this.guna2Button5;
-            this.guna2Button5.Location = new System.Drawing.Point(151, 488);
+            this.guna2Button5.Location = new System.Drawing.Point(151, 501);
             this.guna2Button5.Name = "guna2Button5";
             this.guna2Button5.ShadowDecoration.Parent = this.guna2Button5;
             this.guna2Button5.Size = new System.Drawing.Size(128, 40);
@@ -181,25 +181,12 @@ namespace FlangeConnection
             this.guna2Button4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.guna2Button4.ForeColor = System.Drawing.Color.Black;
             this.guna2Button4.HoverState.Parent = this.guna2Button4;
-            this.guna2Button4.Location = new System.Drawing.Point(151, 442);
+            this.guna2Button4.Location = new System.Drawing.Point(151, 455);
             this.guna2Button4.Name = "guna2Button4";
             this.guna2Button4.ShadowDecoration.Parent = this.guna2Button4;
             this.guna2Button4.Size = new System.Drawing.Size(128, 40);
             this.guna2Button4.TabIndex = 5;
             this.guna2Button4.Text = "Расчет";
-            // 
-            // groupBoxMaterial
-            // 
-            this.groupBoxMaterial.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.groupBoxMaterial.CustomBorderThickness = new System.Windows.Forms.Padding(0, 10, 0, 0);
-            this.groupBoxMaterial.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
-            this.groupBoxMaterial.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.groupBoxMaterial.ForeColor = System.Drawing.Color.Black;
-            this.groupBoxMaterial.Location = new System.Drawing.Point(32, 233);
-            this.groupBoxMaterial.Name = "groupBoxMaterial";
-            this.groupBoxMaterial.ShadowDecoration.Parent = this.groupBoxMaterial;
-            this.groupBoxMaterial.Size = new System.Drawing.Size(386, 194);
-            this.groupBoxMaterial.TabIndex = 4;
             // 
             // guna2VSeparator1
             // 
@@ -248,7 +235,7 @@ namespace FlangeConnection
             this.guna2HtmlLabel4.Name = "guna2HtmlLabel4";
             this.guna2HtmlLabel4.Size = new System.Drawing.Size(184, 18);
             this.guna2HtmlLabel4.TabIndex = 3;
-            this.guna2HtmlLabel4.Text = "Внутренний лиаметр D (мм)";
+            this.guna2HtmlLabel4.Text = "Внутренний диаметр D (мм)";
             // 
             // guna2ComboBox1
             // 
@@ -257,12 +244,12 @@ namespace FlangeConnection
             this.guna2ComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.guna2ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.guna2ComboBox1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
-            this.guna2ComboBox1.FocusedColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.guna2ComboBox1.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.guna2ComboBox1.FocusedColor = System.Drawing.Color.DimGray;
+            this.guna2ComboBox1.FocusedState.BorderColor = System.Drawing.Color.DimGray;
             this.guna2ComboBox1.FocusedState.Parent = this.guna2ComboBox1;
             this.guna2ComboBox1.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.guna2ComboBox1.ForeColor = System.Drawing.Color.Black;
-            this.guna2ComboBox1.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.guna2ComboBox1.HoverState.BorderColor = System.Drawing.Color.DimGray;
             this.guna2ComboBox1.HoverState.Parent = this.guna2ComboBox1;
             this.guna2ComboBox1.ItemHeight = 30;
             this.guna2ComboBox1.Items.AddRange(new object[] {
@@ -288,16 +275,17 @@ namespace FlangeConnection
             this.guna2TextBox2.DisabledState.Parent = this.guna2TextBox2;
             this.guna2TextBox2.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
             this.guna2TextBox2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
-            this.guna2TextBox2.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.guna2TextBox2.FocusedState.BorderColor = System.Drawing.Color.DimGray;
             this.guna2TextBox2.FocusedState.Parent = this.guna2TextBox2;
             this.guna2TextBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.guna2TextBox2.ForeColor = System.Drawing.Color.Black;
-            this.guna2TextBox2.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.guna2TextBox2.HoverState.BorderColor = System.Drawing.Color.DimGray;
             this.guna2TextBox2.HoverState.Parent = this.guna2TextBox2;
             this.guna2TextBox2.Location = new System.Drawing.Point(294, 155);
             this.guna2TextBox2.Name = "guna2TextBox2";
             this.guna2TextBox2.PasswordChar = '\0';
-            this.guna2TextBox2.PlaceholderText = "";
+            this.guna2TextBox2.PlaceholderForeColor = System.Drawing.Color.Gray;
+            this.guna2TextBox2.PlaceholderText = "Max значение 70 ℃";
             this.guna2TextBox2.SelectedText = "";
             this.guna2TextBox2.ShadowDecoration.Parent = this.guna2TextBox2;
             this.guna2TextBox2.Size = new System.Drawing.Size(125, 36);
@@ -315,11 +303,11 @@ namespace FlangeConnection
             this.guna2TextBox1.DisabledState.Parent = this.guna2TextBox1;
             this.guna2TextBox1.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
             this.guna2TextBox1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
-            this.guna2TextBox1.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.guna2TextBox1.FocusedState.BorderColor = System.Drawing.Color.DimGray;
             this.guna2TextBox1.FocusedState.Parent = this.guna2TextBox1;
             this.guna2TextBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.guna2TextBox1.ForeColor = System.Drawing.Color.Black;
-            this.guna2TextBox1.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.guna2TextBox1.HoverState.BorderColor = System.Drawing.Color.DimGray;
             this.guna2TextBox1.HoverState.Parent = this.guna2TextBox1;
             this.guna2TextBox1.Location = new System.Drawing.Point(294, 51);
             this.guna2TextBox1.Name = "guna2TextBox1";
@@ -356,11 +344,12 @@ namespace FlangeConnection
             // 
             this.guna2ShadowPanel1.BackColor = System.Drawing.Color.Transparent;
             this.guna2ShadowPanel1.Controls.Add(this.richTextBox1);
+            this.guna2ShadowPanel1.EdgeWidth = 20;
             this.guna2ShadowPanel1.FillColor = System.Drawing.Color.White;
             this.guna2ShadowPanel1.Location = new System.Drawing.Point(46, 51);
             this.guna2ShadowPanel1.Name = "guna2ShadowPanel1";
             this.guna2ShadowPanel1.ShadowColor = System.Drawing.Color.Black;
-            this.guna2ShadowPanel1.ShadowStyle = Guna.UI2.WinForms.Guna2ShadowPanel.ShadowMode.Dropped;
+            this.guna2ShadowPanel1.ShadowStyle = Guna.UI2.WinForms.Guna2ShadowPanel.ShadowMode.ForwardDiagonal;
             this.guna2ShadowPanel1.Size = new System.Drawing.Size(670, 494);
             this.guna2ShadowPanel1.TabIndex = 2;
             // 
@@ -370,7 +359,7 @@ namespace FlangeConnection
             this.richTextBox1.BulletIndent = 20;
             this.richTextBox1.Location = new System.Drawing.Point(3, 0);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(664, 477);
+            this.richTextBox1.Size = new System.Drawing.Size(651, 477);
             this.richTextBox1.TabIndex = 1;
             this.richTextBox1.Text = "";
             // 
@@ -383,6 +372,19 @@ namespace FlangeConnection
             this.guna2HtmlLabel3.Size = new System.Drawing.Size(91, 33);
             this.guna2HtmlLabel3.TabIndex = 0;
             this.guna2HtmlLabel3.Text = "Расчет";
+            // 
+            // panelMaterial
+            // 
+            this.panelMaterial.AutoScroll = true;
+            this.panelMaterial.BackColor = System.Drawing.Color.Transparent;
+            this.panelMaterial.EdgeWidth = 10;
+            this.panelMaterial.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
+            this.panelMaterial.Location = new System.Drawing.Point(31, 233);
+            this.panelMaterial.Name = "panelMaterial";
+            this.panelMaterial.ShadowColor = System.Drawing.Color.Black;
+            this.panelMaterial.ShadowShift = 4;
+            this.panelMaterial.Size = new System.Drawing.Size(388, 200);
+            this.panelMaterial.TabIndex = 6;
             // 
             // Fm
             // 
@@ -428,9 +430,9 @@ namespace FlangeConnection
         private Guna.UI2.WinForms.Guna2TextBox guna2TextBox2;
         private Guna.UI2.WinForms.Guna2TextBox guna2TextBox1;
         private Guna.UI2.WinForms.Guna2VSeparator guna2VSeparator1;
-        private Guna.UI2.WinForms.Guna2GroupBox groupBoxMaterial;
         private Guna.UI2.WinForms.Guna2Button guna2Button5;
         private Guna.UI2.WinForms.Guna2Button guna2Button4;
+        private Guna.UI2.WinForms.Guna2ShadowPanel panelMaterial;
     }
 }
 
