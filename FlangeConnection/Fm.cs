@@ -8,14 +8,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace FlangeConnection
 {
     public partial class Fm : Form
     {
+        private SqlConnection SqlConnection = null;
         private Calc calc;
 
-        int index = 1; // индекс для радиобтн материал
 
         public Fm()
         {
@@ -23,35 +26,65 @@ namespace FlangeConnection
 
             calc = new Calc();
 
-
-            createRadioBtnMaterial("Сталь");
-            createRadioBtnMaterial("Чугун");
-            createRadioBtnMaterial("Чугун");
-            createRadioBtnMaterial("Чугун");
-            createRadioBtnMaterial("Чугун");
-            createRadioBtnMaterial("Чугун");
-            createRadioBtnMaterial("Чугун");
-            createRadioBtnMaterial("Чугун");
-            createRadioBtnMaterial("Чугун");
-            createRadioBtnMaterial("Чугун");
-            createRadioBtnMaterial("Чугун");
-            createRadioBtnMaterial("Чугун");
-
+            tbPressure.TextChanged += TbPressure_TextChanged;
+            tbTemperature.TextChanged += TbTemperature_TextChanged;
             buExit.Click += (s, e) => Application.Exit();
             
         }
 
-        // создание материала
-        private void createRadioBtnMaterial(string text)
+        private void TbPressure_TextChanged(object sender, EventArgs e)
         {
-            RadioButton temp = new RadioButton();
-            temp.Text = text;
-            temp.Location = new Point(15, 25 * index);
-            temp.Name = $"radioButton{index}";
-            temp.BackColor = Color.FromName("#D7D5D5");
+            changeListOfMaterials();
+        }
 
-            panelMaterial.Controls.Add(temp);
-            index++;
+        private void TbTemperature_TextChanged(object sender, EventArgs e)
+        {
+            changeListOfMaterials();       
+        }
+
+        private void changeListOfMaterials()
+        {
+            lvMaterial.Items.Clear();
+
+
+            if (tbTemperature.Text != "" && tbTemperature.Text != "-" && tbPressure.Text != "")
+            {
+                SqlDataReader dataReader = null;
+
+                try
+                {
+                    SqlCommand sqlCommand = new SqlCommand($"SELECT DISTINCT BrandOfMaterial, GroupOfMaterial FROM FlangeMaterial WHERE TemperatureTo > {Convert.ToInt32(tbTemperature.Text)} AND TemperatureFrom  < {Convert.ToInt32(tbTemperature.Text)} AND Pressure > {Convert.ToInt32(tbPressure.Text)}", SqlConnection);
+
+                    dataReader = sqlCommand.ExecuteReader();
+
+                    ListViewItem item = null;
+
+                    while (dataReader.Read())
+                    {
+                        item = new ListViewItem(new string[] {Convert.ToString(dataReader["GroupOfMaterial"]),
+                    Convert.ToString(dataReader["BrandOfMaterial"])});
+
+                        lvMaterial.Items.Add(item);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                finally
+                {
+                    if (dataReader != null && !dataReader.IsClosed)
+                        dataReader.Close();
+                }
+            }
+        }
+
+        private void Fm_Load(object sender, EventArgs e)
+        {
+            SqlConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database"].ConnectionString);
+
+            SqlConnection.Open();
+
         }
     }
 }

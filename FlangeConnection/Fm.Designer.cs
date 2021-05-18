@@ -36,23 +36,27 @@ namespace FlangeConnection
             this.buExit = new Guna.UI2.WinForms.Guna2Button();
             this.guna2Panel1 = new Guna.UI2.WinForms.Guna2Panel();
             this.guna2Button5 = new Guna.UI2.WinForms.Guna2Button();
+            this.panelMaterial = new Guna.UI2.WinForms.Guna2ShadowPanel();
+            this.lvMaterial = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.guna2Button4 = new Guna.UI2.WinForms.Guna2Button();
             this.guna2VSeparator1 = new Guna.UI2.WinForms.Guna2VSeparator();
             this.guna2HtmlLabel7 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.guna2HtmlLabel6 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.guna2HtmlLabel5 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.guna2HtmlLabel4 = new Guna.UI2.WinForms.Guna2HtmlLabel();
-            this.guna2ComboBox1 = new Guna.UI2.WinForms.Guna2ComboBox();
-            this.guna2TextBox2 = new Guna.UI2.WinForms.Guna2TextBox();
+            this.tbTemperature = new Guna.UI2.WinForms.Guna2TextBox();
+            this.tbPressure = new Guna.UI2.WinForms.Guna2TextBox();
             this.guna2TextBox1 = new Guna.UI2.WinForms.Guna2TextBox();
             this.guna2HtmlLabel2 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.guna2Panel2 = new Guna.UI2.WinForms.Guna2Panel();
             this.guna2ShadowPanel1 = new Guna.UI2.WinForms.Guna2ShadowPanel();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.guna2HtmlLabel3 = new Guna.UI2.WinForms.Guna2HtmlLabel();
-            this.panelMaterial = new Guna.UI2.WinForms.Guna2ShadowPanel();
             this.guna2GradientPanel1.SuspendLayout();
             this.guna2Panel1.SuspendLayout();
+            this.panelMaterial.SuspendLayout();
             this.guna2Panel2.SuspendLayout();
             this.guna2ShadowPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -133,16 +137,16 @@ namespace FlangeConnection
             // guna2Panel1
             // 
             this.guna2Panel1.BorderColor = System.Drawing.Color.Black;
-            this.guna2Panel1.Controls.Add(this.panelMaterial);
             this.guna2Panel1.Controls.Add(this.guna2Button5);
+            this.guna2Panel1.Controls.Add(this.panelMaterial);
             this.guna2Panel1.Controls.Add(this.guna2Button4);
             this.guna2Panel1.Controls.Add(this.guna2VSeparator1);
             this.guna2Panel1.Controls.Add(this.guna2HtmlLabel7);
             this.guna2Panel1.Controls.Add(this.guna2HtmlLabel6);
             this.guna2Panel1.Controls.Add(this.guna2HtmlLabel5);
             this.guna2Panel1.Controls.Add(this.guna2HtmlLabel4);
-            this.guna2Panel1.Controls.Add(this.guna2ComboBox1);
-            this.guna2Panel1.Controls.Add(this.guna2TextBox2);
+            this.guna2Panel1.Controls.Add(this.tbTemperature);
+            this.guna2Panel1.Controls.Add(this.tbPressure);
             this.guna2Panel1.Controls.Add(this.guna2TextBox1);
             this.guna2Panel1.Controls.Add(this.guna2HtmlLabel2);
             this.guna2Panel1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(227)))), ((int)(((byte)(227)))), ((int)(((byte)(227)))));
@@ -169,6 +173,49 @@ namespace FlangeConnection
             this.guna2Button5.Size = new System.Drawing.Size(128, 40);
             this.guna2Button5.TabIndex = 5;
             this.guna2Button5.Text = "Экспорт .pdf";
+            // 
+            // panelMaterial
+            // 
+            this.panelMaterial.AutoScroll = true;
+            this.panelMaterial.BackColor = System.Drawing.Color.Transparent;
+            this.panelMaterial.Controls.Add(this.lvMaterial);
+            this.panelMaterial.EdgeWidth = 10;
+            this.panelMaterial.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
+            this.panelMaterial.Location = new System.Drawing.Point(31, 233);
+            this.panelMaterial.Name = "panelMaterial";
+            this.panelMaterial.ShadowColor = System.Drawing.Color.Black;
+            this.panelMaterial.ShadowShift = 1;
+            this.panelMaterial.Size = new System.Drawing.Size(388, 200);
+            this.panelMaterial.TabIndex = 6;
+            // 
+            // lvMaterial
+            // 
+            this.lvMaterial.Activation = System.Windows.Forms.ItemActivation.OneClick;
+            this.lvMaterial.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
+            this.lvMaterial.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lvMaterial.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2});
+            this.lvMaterial.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.lvMaterial.HideSelection = false;
+            this.lvMaterial.Location = new System.Drawing.Point(0, 13);
+            this.lvMaterial.MultiSelect = false;
+            this.lvMaterial.Name = "lvMaterial";
+            this.lvMaterial.Size = new System.Drawing.Size(388, 187);
+            this.lvMaterial.Sorting = System.Windows.Forms.SortOrder.Ascending;
+            this.lvMaterial.TabIndex = 0;
+            this.lvMaterial.UseCompatibleStateImageBehavior = false;
+            this.lvMaterial.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Группа стали или чугуна";
+            this.columnHeader1.Width = 200;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Марка материала";
+            this.columnHeader2.Width = 150;
             // 
             // guna2Button4
             // 
@@ -237,59 +284,60 @@ namespace FlangeConnection
             this.guna2HtmlLabel4.TabIndex = 3;
             this.guna2HtmlLabel4.Text = "Внутренний диаметр D (мм)";
             // 
-            // guna2ComboBox1
+            // tbTemperature
             // 
-            this.guna2ComboBox1.BackColor = System.Drawing.Color.Transparent;
-            this.guna2ComboBox1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(185)))), ((int)(((byte)(185)))));
-            this.guna2ComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.guna2ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.guna2ComboBox1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
-            this.guna2ComboBox1.FocusedColor = System.Drawing.Color.DimGray;
-            this.guna2ComboBox1.FocusedState.BorderColor = System.Drawing.Color.DimGray;
-            this.guna2ComboBox1.FocusedState.Parent = this.guna2ComboBox1;
-            this.guna2ComboBox1.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.guna2ComboBox1.ForeColor = System.Drawing.Color.Black;
-            this.guna2ComboBox1.HoverState.BorderColor = System.Drawing.Color.DimGray;
-            this.guna2ComboBox1.HoverState.Parent = this.guna2ComboBox1;
-            this.guna2ComboBox1.ItemHeight = 30;
-            this.guna2ComboBox1.Items.AddRange(new object[] {
-            "1",
-            "2,5",
-            "6"});
-            this.guna2ComboBox1.ItemsAppearance.Parent = this.guna2ComboBox1;
-            this.guna2ComboBox1.Location = new System.Drawing.Point(294, 104);
-            this.guna2ComboBox1.Name = "guna2ComboBox1";
-            this.guna2ComboBox1.ShadowDecoration.Parent = this.guna2ComboBox1;
-            this.guna2ComboBox1.Size = new System.Drawing.Size(125, 36);
-            this.guna2ComboBox1.TabIndex = 2;
+            this.tbTemperature.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
+            this.tbTemperature.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(185)))), ((int)(((byte)(185)))));
+            this.tbTemperature.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.tbTemperature.DefaultText = "";
+            this.tbTemperature.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.tbTemperature.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.tbTemperature.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.tbTemperature.DisabledState.Parent = this.tbTemperature;
+            this.tbTemperature.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.tbTemperature.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
+            this.tbTemperature.FocusedState.BorderColor = System.Drawing.Color.DimGray;
+            this.tbTemperature.FocusedState.Parent = this.tbTemperature;
+            this.tbTemperature.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.tbTemperature.ForeColor = System.Drawing.Color.Black;
+            this.tbTemperature.HoverState.BorderColor = System.Drawing.Color.DimGray;
+            this.tbTemperature.HoverState.Parent = this.tbTemperature;
+            this.tbTemperature.Location = new System.Drawing.Point(294, 155);
+            this.tbTemperature.Name = "tbTemperature";
+            this.tbTemperature.PasswordChar = '\0';
+            this.tbTemperature.PlaceholderForeColor = System.Drawing.Color.Gray;
+            this.tbTemperature.PlaceholderText = "";
+            this.tbTemperature.SelectedText = "";
+            this.tbTemperature.ShadowDecoration.Parent = this.tbTemperature;
+            this.tbTemperature.Size = new System.Drawing.Size(125, 36);
+            this.tbTemperature.TabIndex = 1;
             // 
-            // guna2TextBox2
+            // tbPressure
             // 
-            this.guna2TextBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
-            this.guna2TextBox2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(185)))), ((int)(((byte)(185)))));
-            this.guna2TextBox2.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.guna2TextBox2.DefaultText = "";
-            this.guna2TextBox2.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
-            this.guna2TextBox2.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-            this.guna2TextBox2.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.guna2TextBox2.DisabledState.Parent = this.guna2TextBox2;
-            this.guna2TextBox2.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.guna2TextBox2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
-            this.guna2TextBox2.FocusedState.BorderColor = System.Drawing.Color.DimGray;
-            this.guna2TextBox2.FocusedState.Parent = this.guna2TextBox2;
-            this.guna2TextBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.guna2TextBox2.ForeColor = System.Drawing.Color.Black;
-            this.guna2TextBox2.HoverState.BorderColor = System.Drawing.Color.DimGray;
-            this.guna2TextBox2.HoverState.Parent = this.guna2TextBox2;
-            this.guna2TextBox2.Location = new System.Drawing.Point(294, 155);
-            this.guna2TextBox2.Name = "guna2TextBox2";
-            this.guna2TextBox2.PasswordChar = '\0';
-            this.guna2TextBox2.PlaceholderForeColor = System.Drawing.Color.Gray;
-            this.guna2TextBox2.PlaceholderText = "Max значение 70 ℃";
-            this.guna2TextBox2.SelectedText = "";
-            this.guna2TextBox2.ShadowDecoration.Parent = this.guna2TextBox2;
-            this.guna2TextBox2.Size = new System.Drawing.Size(125, 36);
-            this.guna2TextBox2.TabIndex = 1;
+            this.tbPressure.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
+            this.tbPressure.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(185)))), ((int)(((byte)(185)))));
+            this.tbPressure.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.tbPressure.DefaultText = "";
+            this.tbPressure.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.tbPressure.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.tbPressure.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.tbPressure.DisabledState.Parent = this.tbPressure;
+            this.tbPressure.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.tbPressure.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
+            this.tbPressure.FocusedState.BorderColor = System.Drawing.Color.DimGray;
+            this.tbPressure.FocusedState.Parent = this.tbPressure;
+            this.tbPressure.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.tbPressure.ForeColor = System.Drawing.Color.Black;
+            this.tbPressure.HoverState.BorderColor = System.Drawing.Color.DimGray;
+            this.tbPressure.HoverState.Parent = this.tbPressure;
+            this.tbPressure.Location = new System.Drawing.Point(294, 104);
+            this.tbPressure.Name = "tbPressure";
+            this.tbPressure.PasswordChar = '\0';
+            this.tbPressure.PlaceholderText = "";
+            this.tbPressure.SelectedText = "";
+            this.tbPressure.ShadowDecoration.Parent = this.tbPressure;
+            this.tbPressure.Size = new System.Drawing.Size(125, 36);
+            this.tbPressure.TabIndex = 1;
             // 
             // guna2TextBox1
             // 
@@ -373,19 +421,6 @@ namespace FlangeConnection
             this.guna2HtmlLabel3.TabIndex = 0;
             this.guna2HtmlLabel3.Text = "Расчет";
             // 
-            // panelMaterial
-            // 
-            this.panelMaterial.AutoScroll = true;
-            this.panelMaterial.BackColor = System.Drawing.Color.Transparent;
-            this.panelMaterial.EdgeWidth = 10;
-            this.panelMaterial.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
-            this.panelMaterial.Location = new System.Drawing.Point(31, 233);
-            this.panelMaterial.Name = "panelMaterial";
-            this.panelMaterial.ShadowColor = System.Drawing.Color.Black;
-            this.panelMaterial.ShadowShift = 4;
-            this.panelMaterial.Size = new System.Drawing.Size(388, 200);
-            this.panelMaterial.TabIndex = 6;
-            // 
             // Fm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -398,10 +433,12 @@ namespace FlangeConnection
             this.Name = "Fm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Fm_Load);
             this.guna2GradientPanel1.ResumeLayout(false);
             this.guna2GradientPanel1.PerformLayout();
             this.guna2Panel1.ResumeLayout(false);
             this.guna2Panel1.PerformLayout();
+            this.panelMaterial.ResumeLayout(false);
             this.guna2Panel2.ResumeLayout(false);
             this.guna2Panel2.PerformLayout();
             this.guna2ShadowPanel1.ResumeLayout(false);
@@ -426,13 +463,16 @@ namespace FlangeConnection
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel6;
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel5;
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel4;
-        private Guna.UI2.WinForms.Guna2ComboBox guna2ComboBox1;
-        private Guna.UI2.WinForms.Guna2TextBox guna2TextBox2;
+        private Guna.UI2.WinForms.Guna2TextBox tbTemperature;
         private Guna.UI2.WinForms.Guna2TextBox guna2TextBox1;
         private Guna.UI2.WinForms.Guna2VSeparator guna2VSeparator1;
         private Guna.UI2.WinForms.Guna2Button guna2Button5;
         private Guna.UI2.WinForms.Guna2Button guna2Button4;
         private Guna.UI2.WinForms.Guna2ShadowPanel panelMaterial;
+        private Guna.UI2.WinForms.Guna2TextBox tbPressure;
+        private System.Windows.Forms.ListView lvMaterial;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
     }
 }
 
