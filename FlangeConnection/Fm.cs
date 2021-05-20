@@ -19,6 +19,7 @@ namespace FlangeConnection
         private SqlConnection SqlConnection = null;
         private Calc calc;
 
+        public double PN { get; private set; }
 
         public Fm()
         {
@@ -26,11 +27,66 @@ namespace FlangeConnection
 
             calc = new Calc();
 
+            SetParams();
+
             tbPressure.TextChanged += TbPressure_TextChanged;
             tbTemperature.TextChanged += TbTemperature_TextChanged;
+            tbPressure.KeyPress += TbPressure_KeyPress;
+            tbTemperature.KeyPress += TbTemperature_KeyPress;
+            tbDiametr.KeyPress += TbDiametr_KeyPress;
             buExit.Click += (s, e) => Application.Exit();
-            
         }
+
+        private void TbDiametr_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char number = e.KeyChar;
+            if (!Char.IsDigit(number) && number != 8) // цифры, клавиша BackSpace
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void TbTemperature_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char number = e.KeyChar;
+            if (!Char.IsDigit(number) && number != 8 && number != 45) // цифры, клавиша BackSpace и минус
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void TbPressure_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char number = e.KeyChar;
+            if (!Char.IsDigit(number) && number != 8 && number != 44 && number != 45) // цифры, клавиша BackSpace, минус и запятая
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void SetParams()
+        {
+            PN = findPN(Convert.ToDouble(tbPressure.Text));
+        }
+
+        private double findPN(double v)
+        {
+            double convertPressureFromMPaToKgSm2 = Math.Round(10.197162 * v, 1);
+
+            double[] arrPN = new double[] {1, 2.5, 6, 10, 16, 25};
+            double PN = arrPN[0];
+
+            for (int i = 0; i < arrPN.Length; i++)
+            {
+                if (convertPressureFromMPaToKgSm2 <= arrPN[i])
+                {
+                    PN = arrPN[i];
+                    break;
+                }
+            }
+            return PN;
+        }
+
 
         private void TbPressure_TextChanged(object sender, EventArgs e)
         {
@@ -46,14 +102,15 @@ namespace FlangeConnection
         {
             lvMaterial.Items.Clear();
 
-
             if (tbTemperature.Text != "" && tbTemperature.Text != "-" && tbPressure.Text != "")
             {
+                SetParams();
+
                 SqlDataReader dataReader = null;
 
                 try
                 {
-                    SqlCommand sqlCommand = new SqlCommand($"SELECT DISTINCT BrandOfMaterial, GroupOfMaterial FROM FlangeMaterial WHERE TemperatureTo > {Convert.ToInt32(tbTemperature.Text)} AND TemperatureFrom  < {Convert.ToInt32(tbTemperature.Text)} AND Pressure > {Convert.ToInt32(tbPressure.Text)}", SqlConnection);
+                    SqlCommand sqlCommand = new SqlCommand($"SELECT DISTINCT BrandOfMaterial, GroupOfMaterial FROM FlangeMaterial_ WHERE TemperatureTo > {Convert.ToInt32(tbTemperature.Text)} AND TemperatureFrom  < {Convert.ToInt32(tbTemperature.Text)} AND Pressure > {Convert.ToInt32(PN)}", SqlConnection);
 
                     dataReader = sqlCommand.ExecuteReader();
 
@@ -79,12 +136,42 @@ namespace FlangeConnection
             }
         }
 
+        private void createListOfEnvironment()
+        {
+            SqlDataReader dataReader = null;
+
+            try
+            {
+                SqlCommand sqlCommand = new SqlCommand($"SELECT DISTINCT Environment FROM EnvironmentTable", SqlConnection);
+
+                dataReader = sqlCommand.ExecuteReader();
+
+                ListViewItem item = null;
+
+                while (dataReader.Read())
+                {
+                    item = new ListViewItem(new string[] {Convert.ToString(dataReader["Environment"])});
+
+                    lvEnvironment.Items.Add(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                if (dataReader != null && !dataReader.IsClosed)
+                    dataReader.Close();
+            }
+        }
         private void Fm_Load(object sender, EventArgs e)
         {
             SqlConnection = new SqlConnection(ConfigurationManager.ConnectionStrings["Database"].ConnectionString);
 
             SqlConnection.Open();
 
+            createListOfEnvironment();
         }
     }
 }
