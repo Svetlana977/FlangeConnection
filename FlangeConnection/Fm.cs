@@ -171,6 +171,7 @@ namespace FlangeConnection
 
             SqlConnection.Open();
 
+            changeListOfMaterials();
             createListOfEnvironment();
         }
     }

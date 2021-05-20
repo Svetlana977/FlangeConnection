@@ -331,7 +331,7 @@ namespace FlangeConnection
             this.tbTemperature.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
             this.tbTemperature.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(185)))), ((int)(((byte)(185)))));
             this.tbTemperature.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.tbTemperature.DefaultText = "";
+            this.tbTemperature.DefaultText = "0";
             this.tbTemperature.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
             this.tbTemperature.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
             this.tbTemperature.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
@@ -348,8 +348,9 @@ namespace FlangeConnection
             this.tbTemperature.Name = "tbTemperature";
             this.tbTemperature.PasswordChar = '\0';
             this.tbTemperature.PlaceholderForeColor = System.Drawing.Color.Gray;
-            this.tbTemperature.PlaceholderText = "От -270 до 700";
+            this.tbTemperature.PlaceholderText = "От -70 до 300";
             this.tbTemperature.SelectedText = "";
+            this.tbTemperature.SelectionStart = 1;
             this.tbTemperature.ShadowDecoration.Parent = this.tbTemperature;
             this.tbTemperature.Size = new System.Drawing.Size(125, 27);
             this.tbTemperature.TabIndex = 1;
@@ -359,7 +360,7 @@ namespace FlangeConnection
             this.tbPressure.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
             this.tbPressure.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(185)))), ((int)(((byte)(185)))));
             this.tbPressure.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.tbPressure.DefaultText = "";
+            this.tbPressure.DefaultText = "0,6";
             this.tbPressure.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
             this.tbPressure.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
             this.tbPressure.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
@@ -376,8 +377,9 @@ namespace FlangeConnection
             this.tbPressure.Name = "tbPressure";
             this.tbPressure.PasswordChar = '\0';
             this.tbPressure.PlaceholderForeColor = System.Drawing.Color.Gray;
-            this.tbPressure.PlaceholderText = "От 0,10 до 2,45";
+            this.tbPressure.PlaceholderText = "От 0,10 до 2,5";
             this.tbPressure.SelectedText = "";
+            this.tbPressure.SelectionStart = 3;
             this.tbPressure.ShadowDecoration.Parent = this.tbPressure;
             this.tbPressure.Size = new System.Drawing.Size(125, 27);
             this.tbPressure.TabIndex = 1;
