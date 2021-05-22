@@ -20,6 +20,7 @@ namespace FlangeConnection
         private Calc calc;
 
         public double PN { get; private set; }
+        public int Temperature { get; private set; }
 
         public Fm()
         {
@@ -27,15 +28,23 @@ namespace FlangeConnection
 
             calc = new Calc();
 
-            SetParams();
-
             tbPressure.TextChanged += TbPressure_TextChanged;
             tbTemperature.TextChanged += TbTemperature_TextChanged;
             tbPressure.KeyPress += TbPressure_KeyPress;
             tbTemperature.KeyPress += TbTemperature_KeyPress;
             tbDiametr.KeyPress += TbDiametr_KeyPress;
+            lvEnvironment.SelectedIndexChanged += LvEnvironment_SelectedIndexChanged;
+
             buExit.Click += (s, e) => Application.Exit();
         }
+
+        private void LvEnvironment_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lvEnvironment.SelectedItems.Count > 0)
+                changeListOfDesignSeal();
+        }
+
+
 
         private void TbDiametr_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -58,7 +67,7 @@ namespace FlangeConnection
         private void TbPressure_KeyPress(object sender, KeyPressEventArgs e)
         {
             char number = e.KeyChar;
-            if (!Char.IsDigit(number) && number != 8 && number != 44 && number != 45) // цифры, клавиша BackSpace, минус и запятая
+            if (!Char.IsDigit(number) && number != 8 && number != 44) // цифры, клавиша BackSpace и запятая
             {
                 e.Handled = true;
             }
@@ -66,7 +75,10 @@ namespace FlangeConnection
 
         private void SetParams()
         {
-            PN = findPN(Convert.ToDouble(tbPressure.Text));
+            if (tbPressure.Text != "")
+                PN = findPN(Convert.ToDouble(tbPressure.Text));
+            if (tbTemperature.Text != "")
+                Temperature = Convert.ToInt32(tbTemperature.Text);
         }
 
         private double findPN(double v)
@@ -91,6 +103,8 @@ namespace FlangeConnection
         private void TbPressure_TextChanged(object sender, EventArgs e)
         {
             changeListOfMaterials();
+            changeListOfEnvironment();
+            changeListOfDesignSeal();
         }
 
         private void TbTemperature_TextChanged(object sender, EventArgs e)
@@ -100,7 +114,7 @@ namespace FlangeConnection
 
         private void changeListOfMaterials()
         {
-            lvMaterial.Items.Clear();
+            lvMaterialOfFlange.Items.Clear();
 
             if (tbTemperature.Text != "" && tbTemperature.Text != "-" && tbPressure.Text != "")
             {
@@ -121,7 +135,7 @@ namespace FlangeConnection
                         item = new ListViewItem(new string[] {Convert.ToString(dataReader["GroupOfMaterial"]),
                     Convert.ToString(dataReader["BrandOfMaterial"])});
 
-                        lvMaterial.Items.Add(item);
+                        lvMaterialOfFlange.Items.Add(item);
                     }
                 }
                 catch (Exception ex)
@@ -136,33 +150,77 @@ namespace FlangeConnection
             }
         }
 
-        private void createListOfEnvironment()
+        private void changeListOfEnvironment()
         {
-            SqlDataReader dataReader = null;
+            lvEnvironment.Items.Clear();
 
-            try
+            if (tbPressure.Text != "")
             {
-                SqlCommand sqlCommand = new SqlCommand($"SELECT DISTINCT Environment FROM EnvironmentTable", SqlConnection);
+                SetParams();
+                SqlDataReader dataReader = null;
 
-                dataReader = sqlCommand.ExecuteReader();
-
-                ListViewItem item = null;
-
-                while (dataReader.Read())
+                try
                 {
-                    item = new ListViewItem(new string[] {Convert.ToString(dataReader["Environment"])});
+                    SqlCommand sqlCommand = new SqlCommand($"SELECT DISTINCT Environment FROM EnvironmentTable WHERE Pressure > {Convert.ToInt32(PN)}", SqlConnection);
 
-                    lvEnvironment.Items.Add(item);
+                    dataReader = sqlCommand.ExecuteReader();
+
+                    ListViewItem item = null;
+
+                    while (dataReader.Read())
+                    {
+                        item = new ListViewItem(new string[] { Convert.ToString(dataReader["Environment"]) });
+
+                        lvEnvironment.Items.Add(item);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                finally
+                {
+                    if (dataReader != null && !dataReader.IsClosed)
+                        dataReader.Close();
                 }
             }
-            catch (Exception ex)
+        }
+
+        private void changeListOfDesignSeal()
+        {
+            lvDesign.Items.Clear();
+            if (tbPressure.Text != "" && lvEnvironment.SelectedItems.Count != 0)
             {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                if (dataReader != null && !dataReader.IsClosed)
-                    dataReader.Close();
+                SetParams();
+
+                SqlDataReader dataReader = null;
+
+                try
+                {
+                    string str = lvEnvironment.SelectedItems[0].Text;
+
+                    SqlCommand sqlCommand = new SqlCommand($"SELECT DISTINCT Execution FROM EnvironmentTable WHERE Pressure > {Convert.ToInt32(PN)} AND Environment = N'{str}'", SqlConnection);
+
+                    dataReader = sqlCommand.ExecuteReader();
+
+                    ListViewItem item = null;
+
+                    while (dataReader.Read())
+                    {
+                        item = new ListViewItem(new string[] { Convert.ToString(dataReader["Execution"]) });
+
+                        lvDesign.Items.Add(item);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                finally
+                {
+                    if (dataReader != null && !dataReader.IsClosed)
+                        dataReader.Close();
+                }
             }
         }
         private void Fm_Load(object sender, EventArgs e)
@@ -172,7 +230,7 @@ namespace FlangeConnection
             SqlConnection.Open();
 
             changeListOfMaterials();
-            createListOfEnvironment();
+            changeListOfEnvironment();
         }
     }
 }
