@@ -209,7 +209,7 @@ namespace FlangeConnection
             // 
             // columnHeader5
             // 
-            this.columnHeader5.Text = "Материал прокладки";
+            this.columnHeader5.Text = "Тип и материал прокладки";
             this.columnHeader5.Width = 387;
             // 
             // panelDesign
@@ -498,11 +498,12 @@ namespace FlangeConnection
             this.tbS.Name = "tbS";
             this.tbS.PasswordChar = '\0';
             this.tbS.PlaceholderForeColor = System.Drawing.Color.Gray;
-            this.tbS.PlaceholderText = "";
+            this.tbS.PlaceholderText = "< 14";
             this.tbS.SelectedText = "";
             this.tbS.ShadowDecoration.Parent = this.tbS;
             this.tbS.Size = new System.Drawing.Size(125, 27);
             this.tbS.TabIndex = 1;
+            this.tbS.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbS_KeyPress);
             // 
             // tbDiametr
             // 

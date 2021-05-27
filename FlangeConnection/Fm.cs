@@ -264,5 +264,15 @@ namespace FlangeConnection
             if (lvEnvironment.SelectedItems.Count > 0)
                 changeListOfDesignSeal();
         }
+
+        private void tbS_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // ввод только цифр, клавишы BackSpace
+            char number = e.KeyChar;
+            if (!Char.IsDigit(number) && number != 8)
+            {
+                e.Handled = true;
+            }
+        }
     }
 }
