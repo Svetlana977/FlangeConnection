@@ -38,6 +38,7 @@ namespace FlangeConnection
             this.panelMaterialOfSeal = new Guna.UI2.WinForms.Guna2ShadowPanel();
             this.lvMaterialOfSeal = new System.Windows.Forms.ListView();
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.panelDesign = new Guna.UI2.WinForms.Guna2ShadowPanel();
             this.lvDesign = new System.Windows.Forms.ListView();
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -50,7 +51,6 @@ namespace FlangeConnection
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.guna2Button4 = new Guna.UI2.WinForms.Guna2Button();
-            this.guna2HtmlLabel7 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.guna2HtmlLabel6 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.guna2HtmlLabel5 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.guna2HtmlLabel8 = new Guna.UI2.WinForms.Guna2HtmlLabel();
@@ -158,7 +158,6 @@ namespace FlangeConnection
             this.guna2Panel1.Controls.Add(this.guna2Button5);
             this.guna2Panel1.Controls.Add(this.panelMaterial);
             this.guna2Panel1.Controls.Add(this.guna2Button4);
-            this.guna2Panel1.Controls.Add(this.guna2HtmlLabel7);
             this.guna2Panel1.Controls.Add(this.guna2HtmlLabel6);
             this.guna2Panel1.Controls.Add(this.guna2HtmlLabel5);
             this.guna2Panel1.Controls.Add(this.guna2HtmlLabel8);
@@ -182,7 +181,7 @@ namespace FlangeConnection
             this.panelMaterialOfSeal.Controls.Add(this.lvMaterialOfSeal);
             this.panelMaterialOfSeal.EdgeWidth = 5;
             this.panelMaterialOfSeal.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
-            this.panelMaterialOfSeal.Location = new System.Drawing.Point(31, 745);
+            this.panelMaterialOfSeal.Location = new System.Drawing.Point(30, 617);
             this.panelMaterialOfSeal.Name = "panelMaterialOfSeal";
             this.panelMaterialOfSeal.ShadowColor = System.Drawing.Color.Black;
             this.panelMaterialOfSeal.ShadowShift = 1;
@@ -195,7 +194,8 @@ namespace FlangeConnection
             this.lvMaterialOfSeal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
             this.lvMaterialOfSeal.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.lvMaterialOfSeal.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader5});
+            this.columnHeader5,
+            this.columnHeader6});
             this.lvMaterialOfSeal.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lvMaterialOfSeal.HideSelection = false;
             this.lvMaterialOfSeal.Location = new System.Drawing.Point(0, 5);
@@ -206,11 +206,17 @@ namespace FlangeConnection
             this.lvMaterialOfSeal.TabIndex = 0;
             this.lvMaterialOfSeal.UseCompatibleStateImageBehavior = false;
             this.lvMaterialOfSeal.View = System.Windows.Forms.View.Details;
+            this.lvMaterialOfSeal.SelectedIndexChanged += new System.EventHandler(this.lvMaterialOfSeal_SelectedIndexChanged);
             // 
             // columnHeader5
             // 
-            this.columnHeader5.Text = "Тип и материал прокладки";
-            this.columnHeader5.Width = 387;
+            this.columnHeader5.Text = "Тип прокладки";
+            this.columnHeader5.Width = 130;
+            // 
+            // columnHeader6
+            // 
+            this.columnHeader6.Text = "Материал прокладки";
+            this.columnHeader6.Width = 168;
             // 
             // panelDesign
             // 
@@ -219,7 +225,7 @@ namespace FlangeConnection
             this.panelDesign.Controls.Add(this.lvDesign);
             this.panelDesign.EdgeWidth = 5;
             this.panelDesign.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
-            this.panelDesign.Location = new System.Drawing.Point(31, 617);
+            this.panelDesign.Location = new System.Drawing.Point(30, 749);
             this.panelDesign.Name = "panelDesign";
             this.panelDesign.ShadowColor = System.Drawing.Color.Black;
             this.panelDesign.ShadowShift = 1;
@@ -256,11 +262,11 @@ namespace FlangeConnection
             this.panelEnvironment.Controls.Add(this.lvEnvironment);
             this.panelEnvironment.EdgeWidth = 5;
             this.panelEnvironment.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
-            this.panelEnvironment.Location = new System.Drawing.Point(30, 459);
+            this.panelEnvironment.Location = new System.Drawing.Point(31, 245);
             this.panelEnvironment.Name = "panelEnvironment";
             this.panelEnvironment.ShadowColor = System.Drawing.Color.Black;
             this.panelEnvironment.ShadowShift = 1;
-            this.panelEnvironment.Size = new System.Drawing.Size(388, 152);
+            this.panelEnvironment.Size = new System.Drawing.Size(388, 173);
             this.panelEnvironment.TabIndex = 7;
             // 
             // lvEnvironment
@@ -272,10 +278,10 @@ namespace FlangeConnection
             this.columnHeader3});
             this.lvEnvironment.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lvEnvironment.HideSelection = false;
-            this.lvEnvironment.Location = new System.Drawing.Point(3, 5);
+            this.lvEnvironment.Location = new System.Drawing.Point(2, 5);
             this.lvEnvironment.MultiSelect = false;
             this.lvEnvironment.Name = "lvEnvironment";
-            this.lvEnvironment.Size = new System.Drawing.Size(382, 144);
+            this.lvEnvironment.Size = new System.Drawing.Size(385, 165);
             this.lvEnvironment.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lvEnvironment.TabIndex = 0;
             this.lvEnvironment.UseCompatibleStateImageBehavior = false;
@@ -312,7 +318,7 @@ namespace FlangeConnection
             this.panelMaterial.Controls.Add(this.lvMaterialOfFlange);
             this.panelMaterial.EdgeWidth = 5;
             this.panelMaterial.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
-            this.panelMaterial.Location = new System.Drawing.Point(30, 266);
+            this.panelMaterial.Location = new System.Drawing.Point(30, 424);
             this.panelMaterial.Name = "panelMaterial";
             this.panelMaterial.ShadowColor = System.Drawing.Color.Black;
             this.panelMaterial.ShadowShift = 1;
@@ -365,16 +371,6 @@ namespace FlangeConnection
             this.guna2Button4.Size = new System.Drawing.Size(128, 40);
             this.guna2Button4.TabIndex = 5;
             this.guna2Button4.Text = "Расчет";
-            // 
-            // guna2HtmlLabel7
-            // 
-            this.guna2HtmlLabel7.BackColor = System.Drawing.Color.Transparent;
-            this.guna2HtmlLabel7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.guna2HtmlLabel7.Location = new System.Drawing.Point(104, 242);
-            this.guna2HtmlLabel7.Name = "guna2HtmlLabel7";
-            this.guna2HtmlLabel7.Size = new System.Drawing.Size(260, 18);
-            this.guna2HtmlLabel7.TabIndex = 3;
-            this.guna2HtmlLabel7.Text = "Материал для фланцевого соединения";
             // 
             // guna2HtmlLabel6
             // 
@@ -639,7 +635,6 @@ namespace FlangeConnection
         private Guna.UI2.WinForms.Guna2ShadowPanel guna2ShadowPanel1;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel3;
-        private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel7;
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel6;
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel5;
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel4;
@@ -664,6 +659,7 @@ namespace FlangeConnection
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel8;
         private Guna.UI2.WinForms.Guna2TextBox tbS;
         private System.Windows.Forms.RichTextBox tbOutput;
+        private System.Windows.Forms.ColumnHeader columnHeader6;
     }
 }
 

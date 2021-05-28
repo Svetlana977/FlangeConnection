@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 
 namespace FlangeConnection
 {
@@ -21,6 +22,8 @@ namespace FlangeConnection
 
         public double PN { get; private set; } = 0;
         public int Temperature { get; private set; }
+        public int Diametr { get; private set; }
+        public int S { get; private set; }
 
         public Fm()
         {
@@ -39,6 +42,10 @@ namespace FlangeConnection
                 PN = findPN(Convert.ToDouble(tbPressure.Text));
             if (tbTemperature.Text != "" && tbTemperature.Text != "-")
                 Temperature = Convert.ToInt32(tbTemperature.Text);
+            if (tbDiametr.Text != "")
+                Diametr = Convert.ToInt32(tbDiametr.Text);
+            if (tbS.Text != "")
+                S = Convert.ToInt32(tbS.Text);
         }
 
         // функция нахождения номинального диаметра из внутреннего давления среды
@@ -66,7 +73,7 @@ namespace FlangeConnection
         }
 
         // функция для обновления списка материалов фланца
-        private void changeListOfMaterials()
+        private void changeListOfMaterialsOfFlange()
         {
             lvMaterialOfFlange.Items.Clear();
 
@@ -112,17 +119,17 @@ namespace FlangeConnection
         {
             lvEnvironment.Items.Clear();
 
-            if (tbPressure.Text != "")
+            if (tbPressure.Text != "" && tbTemperature.Text != "")
             {
                 SetParams();
 
-                if (PN >= 1 && PN <= 25)
+                if (PN >= 1 && PN <= 25 && Temperature >=-70 && Temperature <=300)
                 {
                     SqlDataReader dataReader = null;
 
                     try
                     {
-                        SqlCommand sqlCommand = new SqlCommand($"SELECT DISTINCT Environment FROM EnvironmentTable WHERE Pressure > {Convert.ToInt32(PN)}", SqlConnection);
+                        SqlCommand sqlCommand = new SqlCommand($"SELECT DISTINCT EnvironmentOfSeal FROM EnvironmentForMaterialOfSeal WHERE Pressure > {Convert.ToInt32(PN)}", SqlConnection);
 
                         dataReader = sqlCommand.ExecuteReader();
 
@@ -130,7 +137,7 @@ namespace FlangeConnection
 
                         while (dataReader.Read())
                         {
-                            item = new ListViewItem(new string[] { Convert.ToString(dataReader["Environment"]) });
+                            item = new ListViewItem(new string[] { Convert.ToString(dataReader["EnvironmentOfSeal"]) });
 
                             lvEnvironment.Items.Add(item);
                         }
@@ -152,7 +159,46 @@ namespace FlangeConnection
         private void changeListOfDesignSeal()
         {
             lvDesign.Items.Clear();
-            if (tbPressure.Text != "" && lvEnvironment.SelectedItems.Count != 0)
+            if (tbPressure.Text != "" && tbTemperature.Text != "" && tbDiametr.Text != "" && lvEnvironment.SelectedItems.Count != 0)
+            {
+                SetParams();
+
+                SqlDataReader dataReader = null;
+
+                try
+                {
+                    string str = lvMaterialOfSeal.SelectedItems[0].SubItems[1].Text;
+
+                    SqlCommand sqlCommand = new SqlCommand($"SELECT DISTINCT DesignOfSeal FROM DesignOfPlateSeal WHERE PressurePNFrom <= {PN} AND PressurePNTo >= {PN} AND DiametrDNFrom <= {Diametr} AND DiametrDNTo >= {Diametr}", SqlConnection);
+
+                    dataReader = sqlCommand.ExecuteReader();
+
+                    ListViewItem item = null;
+
+                    while (dataReader.Read())
+                    {
+                        item = new ListViewItem(new string[] { Convert.ToString(dataReader["DesignOfSeal"]) });
+
+                        lvDesign.Items.Add(item);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                finally
+                {
+                    if (dataReader != null && !dataReader.IsClosed)
+                        dataReader.Close();
+                }
+            }
+        }
+
+        // функция для обновления списка материалов прокладок
+        private void changeListOfMaterialsOfSeal()
+        {
+            lvMaterialOfSeal.Items.Clear();
+            if (tbPressure.Text != "" && tbTemperature.Text != "" && lvEnvironment.SelectedItems.Count != 0)
             {
                 SetParams();
 
@@ -162,7 +208,7 @@ namespace FlangeConnection
                 {
                     string str = lvEnvironment.SelectedItems[0].Text;
 
-                    SqlCommand sqlCommand = new SqlCommand($"SELECT DISTINCT Execution FROM EnvironmentTable WHERE Pressure > {Convert.ToInt32(PN)} AND Environment LIKE N'{str}'", SqlConnection);
+                    SqlCommand sqlCommand = new SqlCommand($"SELECT DISTINCT MaterialOfSeal, EnvironmentOfSeal, TemperatureFrom, TemperatureTo, Pressure, Material, Type_seal FROM EnvironmentForMaterialOfSeal, TypeAndMaterialOfSeal WHERE EnvironmentOfSeal = N'{str}' AND Material LIKE '%' + MaterialOfSeal + '%' AND (TemperatureFrom <= {Temperature} OR TemperatureFrom is null) AND (TemperatureTo >= {Temperature} OR TemperatureTo is null) AND Pressure >= {Convert.ToInt32(PN)}", SqlConnection);
 
                     dataReader = sqlCommand.ExecuteReader();
 
@@ -170,9 +216,10 @@ namespace FlangeConnection
 
                     while (dataReader.Read())
                     {
-                        item = new ListViewItem(new string[] { Convert.ToString(dataReader["Execution"]) });
+                        item = new ListViewItem(new string[] {Convert.ToString(dataReader["Type_seal"]),
+                    Convert.ToString(dataReader["Material"])});
 
-                        lvDesign.Items.Add(item);
+                        lvMaterialOfSeal.Items.Add(item);
                     }
                 }
                 catch (Exception ex)
@@ -196,16 +243,16 @@ namespace FlangeConnection
 
         private void tbPressure_TextChanged_1(object sender, EventArgs e)
         {
-            // при изменении давления обновить список материалов, среды, исполнения уплотнит. поверхности
-            changeListOfMaterials();
+            // при изменении давления обновить список материалов, среды
+            changeListOfMaterialsOfFlange();
             changeListOfEnvironment();
-            changeListOfDesignSeal();
         }
 
         private void tbTemperature_TextChanged_1(object sender, EventArgs e)
         {
-            // при изменении температуры обновить список материалов
-            changeListOfMaterials();
+            // при изменении температуры обновить список материалов, среды
+            changeListOfMaterialsOfFlange();
+            changeListOfEnvironment();
         }
 
         private void tbTemperature_KeyPress_1(object sender, KeyPressEventArgs e)
@@ -259,11 +306,12 @@ namespace FlangeConnection
 
         private void lvEnvironment_SelectedIndexChanged_1(object sender, EventArgs e)
         {
-            // обновить список исполнений уплотнительных поверхностей
-            // если выбрана среда
+            // обновить список материалов прокладки, если выбрана среда
             if (lvEnvironment.SelectedItems.Count > 0)
-                changeListOfDesignSeal();
+                changeListOfMaterialsOfSeal();
         }
+
+        
 
         private void tbS_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -273,6 +321,13 @@ namespace FlangeConnection
             {
                 e.Handled = true;
             }
+        }
+
+        private void lvMaterialOfSeal_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // обновить список исполнений прокладки, если выбран ее материал
+            if (lvMaterialOfSeal.SelectedItems.Count > 0)
+                changeListOfDesignSeal();
         }
     }
 }
