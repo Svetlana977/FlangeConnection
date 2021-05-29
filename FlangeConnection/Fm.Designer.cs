@@ -528,6 +528,7 @@ namespace FlangeConnection
             this.tbDiametr.ShadowDecoration.Parent = this.tbDiametr;
             this.tbDiametr.Size = new System.Drawing.Size(125, 27);
             this.tbDiametr.TabIndex = 1;
+            this.tbDiametr.TextChanged += new System.EventHandler(this.tbDiametr_TextChanged);
             this.tbDiametr.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbDiametr_KeyPress_1);
             // 
             // guna2HtmlLabel2

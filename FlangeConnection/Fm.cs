@@ -168,8 +168,7 @@ namespace FlangeConnection
                 try
                 {
                     string str = lvMaterialOfSeal.SelectedItems[0].SubItems[1].Text;
-
-                    SqlCommand sqlCommand = new SqlCommand($"SELECT DISTINCT DesignOfSeal FROM DesignOfPlateSeal WHERE PressurePNFrom <= {PN} AND PressurePNTo >= {PN} AND DiametrDNFrom <= {Diametr} AND DiametrDNTo >= {Diametr}", SqlConnection);
+                    SqlCommand sqlCommand = new SqlCommand($"SELECT DISTINCT DesignOfSeal, MaterialCut FROM DesignOfPlateSeal, TypeAndMaterialOfSeal WHERE PressurePNFrom <= {PN.ToString().Replace(',', '.')} AND PressurePNTo >= {PN.ToString().Replace(',', '.')} AND DiametrDNFrom <= {Diametr} AND DiametrDNTo >= {Diametr} AND MaterialOFSeal LIKE '%' + MaterialCut + '%' AND Material = N'{str}'", SqlConnection);
 
                     dataReader = sqlCommand.ExecuteReader();
 
@@ -243,16 +242,20 @@ namespace FlangeConnection
 
         private void tbPressure_TextChanged_1(object sender, EventArgs e)
         {
-            // при изменении давления обновить список материалов, среды
+            // при изменении давления обновить список материалов, среды, исполнения
             changeListOfMaterialsOfFlange();
             changeListOfEnvironment();
+            changeListOfMaterialsOfSeal();
+            changeListOfDesignSeal();
         }
 
         private void tbTemperature_TextChanged_1(object sender, EventArgs e)
         {
-            // при изменении температуры обновить список материалов, среды
+            // при изменении температуры обновить список материалов, среды, исполнения
             changeListOfMaterialsOfFlange();
             changeListOfEnvironment();
+            changeListOfMaterialsOfSeal();
+            changeListOfDesignSeal();
         }
 
         private void tbTemperature_KeyPress_1(object sender, KeyPressEventArgs e)
@@ -328,6 +331,11 @@ namespace FlangeConnection
             // обновить список исполнений прокладки, если выбран ее материал
             if (lvMaterialOfSeal.SelectedItems.Count > 0)
                 changeListOfDesignSeal();
+        }
+
+        private void tbDiametr_TextChanged(object sender, EventArgs e)
+        {
+            changeListOfDesignSeal();
         }
     }
 }
