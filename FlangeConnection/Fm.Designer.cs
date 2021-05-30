@@ -45,12 +45,12 @@ namespace FlangeConnection
             this.panelEnvironment = new Guna.UI2.WinForms.Guna2ShadowPanel();
             this.lvEnvironment = new System.Windows.Forms.ListView();
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.guna2Button5 = new Guna.UI2.WinForms.Guna2Button();
+            this.buExport = new Guna.UI2.WinForms.Guna2Button();
             this.panelMaterial = new Guna.UI2.WinForms.Guna2ShadowPanel();
             this.lvMaterialOfFlange = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.guna2Button4 = new Guna.UI2.WinForms.Guna2Button();
+            this.buCalc = new Guna.UI2.WinForms.Guna2Button();
             this.guna2HtmlLabel6 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.guna2HtmlLabel5 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.guna2HtmlLabel8 = new Guna.UI2.WinForms.Guna2HtmlLabel();
@@ -155,9 +155,9 @@ namespace FlangeConnection
             this.guna2Panel1.Controls.Add(this.panelMaterialOfSeal);
             this.guna2Panel1.Controls.Add(this.panelDesign);
             this.guna2Panel1.Controls.Add(this.panelEnvironment);
-            this.guna2Panel1.Controls.Add(this.guna2Button5);
+            this.guna2Panel1.Controls.Add(this.buExport);
             this.guna2Panel1.Controls.Add(this.panelMaterial);
-            this.guna2Panel1.Controls.Add(this.guna2Button4);
+            this.guna2Panel1.Controls.Add(this.buCalc);
             this.guna2Panel1.Controls.Add(this.guna2HtmlLabel6);
             this.guna2Panel1.Controls.Add(this.guna2HtmlLabel5);
             this.guna2Panel1.Controls.Add(this.guna2HtmlLabel8);
@@ -293,23 +293,23 @@ namespace FlangeConnection
             this.columnHeader3.Text = "Среда";
             this.columnHeader3.Width = 387;
             // 
-            // guna2Button5
+            // buExport
             // 
-            this.guna2Button5.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(185)))), ((int)(((byte)(185)))));
-            this.guna2Button5.BorderRadius = 2;
-            this.guna2Button5.BorderThickness = 1;
-            this.guna2Button5.CheckedState.Parent = this.guna2Button5;
-            this.guna2Button5.CustomImages.Parent = this.guna2Button5;
-            this.guna2Button5.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
-            this.guna2Button5.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.guna2Button5.ForeColor = System.Drawing.Color.Black;
-            this.guna2Button5.HoverState.Parent = this.guna2Button5;
-            this.guna2Button5.Location = new System.Drawing.Point(290, 886);
-            this.guna2Button5.Name = "guna2Button5";
-            this.guna2Button5.ShadowDecoration.Parent = this.guna2Button5;
-            this.guna2Button5.Size = new System.Drawing.Size(128, 40);
-            this.guna2Button5.TabIndex = 5;
-            this.guna2Button5.Text = "Экспорт .pdf";
+            this.buExport.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(185)))), ((int)(((byte)(185)))));
+            this.buExport.BorderRadius = 2;
+            this.buExport.BorderThickness = 1;
+            this.buExport.CheckedState.Parent = this.buExport;
+            this.buExport.CustomImages.Parent = this.buExport;
+            this.buExport.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
+            this.buExport.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.buExport.ForeColor = System.Drawing.Color.Black;
+            this.buExport.HoverState.Parent = this.buExport;
+            this.buExport.Location = new System.Drawing.Point(290, 886);
+            this.buExport.Name = "buExport";
+            this.buExport.ShadowDecoration.Parent = this.buExport;
+            this.buExport.Size = new System.Drawing.Size(128, 40);
+            this.buExport.TabIndex = 5;
+            this.buExport.Text = "Экспорт .pdf";
             // 
             // panelMaterial
             // 
@@ -354,23 +354,24 @@ namespace FlangeConnection
             this.columnHeader2.Text = "Марка материала";
             this.columnHeader2.Width = 174;
             // 
-            // guna2Button4
+            // buCalc
             // 
-            this.guna2Button4.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(185)))), ((int)(((byte)(185)))));
-            this.guna2Button4.BorderRadius = 2;
-            this.guna2Button4.BorderThickness = 1;
-            this.guna2Button4.CheckedState.Parent = this.guna2Button4;
-            this.guna2Button4.CustomImages.Parent = this.guna2Button4;
-            this.guna2Button4.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
-            this.guna2Button4.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.guna2Button4.ForeColor = System.Drawing.Color.Black;
-            this.guna2Button4.HoverState.Parent = this.guna2Button4;
-            this.guna2Button4.Location = new System.Drawing.Point(30, 886);
-            this.guna2Button4.Name = "guna2Button4";
-            this.guna2Button4.ShadowDecoration.Parent = this.guna2Button4;
-            this.guna2Button4.Size = new System.Drawing.Size(128, 40);
-            this.guna2Button4.TabIndex = 5;
-            this.guna2Button4.Text = "Расчет";
+            this.buCalc.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(185)))), ((int)(((byte)(185)))));
+            this.buCalc.BorderRadius = 2;
+            this.buCalc.BorderThickness = 1;
+            this.buCalc.CheckedState.Parent = this.buCalc;
+            this.buCalc.CustomImages.Parent = this.buCalc;
+            this.buCalc.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(213)))), ((int)(((byte)(213)))));
+            this.buCalc.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.buCalc.ForeColor = System.Drawing.Color.Black;
+            this.buCalc.HoverState.Parent = this.buCalc;
+            this.buCalc.Location = new System.Drawing.Point(30, 886);
+            this.buCalc.Name = "buCalc";
+            this.buCalc.ShadowDecoration.Parent = this.buCalc;
+            this.buCalc.Size = new System.Drawing.Size(128, 40);
+            this.buCalc.TabIndex = 5;
+            this.buCalc.Text = "Расчет";
+            this.buCalc.Click += new System.EventHandler(this.buCalc_Click);
             // 
             // guna2HtmlLabel6
             // 
@@ -641,8 +642,8 @@ namespace FlangeConnection
         private Guna.UI2.WinForms.Guna2HtmlLabel guna2HtmlLabel4;
         private Guna.UI2.WinForms.Guna2TextBox tbTemperature;
         private Guna.UI2.WinForms.Guna2TextBox tbDiametr;
-        private Guna.UI2.WinForms.Guna2Button guna2Button5;
-        private Guna.UI2.WinForms.Guna2Button guna2Button4;
+        private Guna.UI2.WinForms.Guna2Button buExport;
+        private Guna.UI2.WinForms.Guna2Button buCalc;
         private Guna.UI2.WinForms.Guna2ShadowPanel panelMaterial;
         private Guna.UI2.WinForms.Guna2TextBox tbPressure;
         private System.Windows.Forms.ListView lvMaterialOfFlange;

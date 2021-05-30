@@ -19,8 +19,11 @@ namespace FlangeConnection
     {
         private SqlConnection SqlConnection = null;
         private Calc calc;
+        private float b_p;
+        private float b_0;
 
-        public double PN { get; private set; } = 0;
+        public int D_cp { get; private set; }
+        public double PN { get; private set; }
         public int Temperature { get; private set; }
         public int Diametr { get; private set; }
         public int S { get; private set; }
@@ -213,7 +216,7 @@ namespace FlangeConnection
                     {
                         string str = lvEnvironment.SelectedItems[0].Text;
 
-                        SqlCommand sqlCommand = new SqlCommand($"SELECT DISTINCT tmp.Material, tmp.Type_seal FROM(SELECT DISTINCT MaterialOfSealCut, MaterialOfSeal, EnvironmentOfSeal, TemperatureFrom, TemperatureTo, Pressure, Material, Type_seal, DiametrDNFrom, DiametrDNTo FROM EnvironmentForMaterialOfSeal, TypeAndMaterialOfSeal, DesignOfPlateSeal WHERE EnvironmentOfSeal = N'{str}' AND Material LIKE '%' + MaterialOfSealCut + '%' AND (TemperatureFrom <= {Temperature} OR TemperatureFrom is null) AND (TemperatureTo >= {Temperature} OR TemperatureTo is null) AND Pressure >= {Convert.ToInt32(PN)} AND MaterialOfSeal LIKE '%' + MaterialOfSealCut + '%' AND DiametrDNFrom <= {Diametr} AND DiametrDNTo >= {Diametr} ) tmp", SqlConnection);
+                        SqlCommand sqlCommand = new SqlCommand($"SELECT DISTINCT tmp.Material, tmp.Type_seal FROM(SELECT DISTINCT MaterialOfSealCut, MaterialOfSeal, EnvironmentOfSeal, TemperatureFrom, TemperatureTo, PressurePNTo, Material, Type_seal, DiametrDNFrom, DiametrDNTo FROM EnvironmentForMaterialOfSeal, TypeAndMaterialOfSeal, DesignOfPlateSeal WHERE EnvironmentOfSeal = N'{str}' AND Material LIKE '%' + MaterialOfSealCut + '%' AND (TemperatureFrom <= {Temperature} OR TemperatureFrom is null) AND (TemperatureTo >= {Temperature} OR TemperatureTo is null) AND PressurePNTo >= {PN.ToString().Replace(',', '.')} AND MaterialOfSeal LIKE '%' + MaterialOfSealCut + '%' AND DiametrDNFrom <= {Diametr} AND DiametrDNTo >= {Diametr} ) tmp", SqlConnection);
 
                         dataReader = sqlCommand.ExecuteReader();
 
@@ -352,6 +355,32 @@ namespace FlangeConnection
             // обновить список материалов прокладки, если выбрана среда
             if (lvEnvironment.SelectedItems.Count > 0)
                 changeListOfMaterialsOfSeal();
+        }
+
+        private void buCalc_Click(object sender, EventArgs e)
+        {
+            calcPoint5();
+        }
+
+        // 5 пункт по ГОСТ 34233.4-2017 по расчету фланцевого соединения на прочность и герметичность
+        private void calcPoint5()
+        {
+            // вычисление ширины прокладки в зависимости от выбранного исполнения и материала прокладки
+            b_p = calc.findWidthOfSeal(SqlConnection, Convert.ToInt32(tbDiametr.Text), Convert.ToDouble(tbPressure.Text), lvMaterialOfSeal.SelectedItems[0].SubItems[1].Text, lvDesign.SelectedItems[0].Text);
+            if (b_p == -1)
+                Debug.WriteLine("Ширина прокладки не вычислена");
+            else
+                Debug.WriteLine(b_p);
+            // вычисление эффективной ширины прокладки
+            b_0 = calc.findEffectWidthOfSeal(b_p);
+            // вычисление расчетного диаметра плоских прокладок
+            D_cp = calc.findCalculatedDiametr(SqlConnection, Convert.ToInt32(tbDiametr.Text), Convert.ToDouble(tbPressure.Text), lvMaterialOfSeal.SelectedItems[0].SubItems[1].Text, lvDesign.SelectedItems[0].Text, b_0);
+            // усилие необходимое для смятия прокладки при затяжке
+            //P_obj = calc.findTighteningForce()
+            
+            richTextBox1.Text = $"ширина прокладки = {b_p}\n" +
+                $"эффективная ширина = {b_0}\n" +
+                $"расчетный диаметр = {D_cp}\n";
         }
     }
 }
