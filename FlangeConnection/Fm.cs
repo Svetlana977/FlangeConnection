@@ -119,7 +119,7 @@ namespace FlangeConnection
         {
             lvEnvironment.Items.Clear();
 
-            if (tbPressure.Text != "" && tbTemperature.Text != "")
+            if (tbPressure.Text != "" && tbTemperature.Text != "" && tbTemperature.Text != "-")
             {
                 SetParams();
 
@@ -163,33 +163,37 @@ namespace FlangeConnection
             {
                 SetParams();
 
-                SqlDataReader dataReader = null;
-
-                try
+                if (PN >= 1 && PN <= 25 && Temperature >= -70 && Temperature <= 300 && Diametr >= 15 && Diametr <= 2420)
                 {
-                    string str = lvMaterialOfSeal.SelectedItems[0].SubItems[1].Text;
-                    SqlCommand sqlCommand = new SqlCommand($"SELECT DISTINCT DesignOfSeal, MaterialCut FROM DesignOfPlateSeal, TypeAndMaterialOfSeal WHERE PressurePNFrom <= {PN.ToString().Replace(',', '.')} AND PressurePNTo >= {PN.ToString().Replace(',', '.')} AND DiametrDNFrom <= {Diametr} AND DiametrDNTo >= {Diametr} AND MaterialOFSeal LIKE '%' + MaterialCut + '%' AND Material = N'{str}'", SqlConnection);
+                    SqlDataReader dataReader = null;
 
-                    dataReader = sqlCommand.ExecuteReader();
-
-                    ListViewItem item = null;
-
-                    while (dataReader.Read())
+                    try
                     {
-                        item = new ListViewItem(new string[] { Convert.ToString(dataReader["DesignOfSeal"]) });
+                        string str = lvMaterialOfSeal.SelectedItems[0].SubItems[1].Text;
+                        SqlCommand sqlCommand = new SqlCommand($"SELECT DISTINCT DesignOfSeal, MaterialCut FROM DesignOfPlateSeal, TypeAndMaterialOfSeal WHERE PressurePNFrom <= {PN.ToString().Replace(',', '.')} AND PressurePNTo >= {PN.ToString().Replace(',', '.')} AND DiametrDNFrom <= {Diametr} AND DiametrDNTo >= {Diametr} AND MaterialOFSeal LIKE '%' + MaterialCut + '%' AND Material = N'{str}'", SqlConnection);
 
-                        lvDesign.Items.Add(item);
+                        dataReader = sqlCommand.ExecuteReader();
+
+                        ListViewItem item = null;
+
+                        while (dataReader.Read())
+                        {
+                            item = new ListViewItem(new string[] { Convert.ToString(dataReader["DesignOfSeal"]) });
+
+                            lvDesign.Items.Add(item);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                    finally
+                    {
+                        if (dataReader != null && !dataReader.IsClosed)
+                            dataReader.Close();
                     }
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-                finally
-                {
-                    if (dataReader != null && !dataReader.IsClosed)
-                        dataReader.Close();
-                }
+                    
             }
         }
 
@@ -197,40 +201,47 @@ namespace FlangeConnection
         private void changeListOfMaterialsOfSeal()
         {
             lvMaterialOfSeal.Items.Clear();
-            if (tbPressure.Text != "" && tbTemperature.Text != "" && lvEnvironment.SelectedItems.Count != 0)
+            if (tbPressure.Text != "" && tbTemperature.Text != "" && tbDiametr.Text != "" && lvEnvironment.SelectedItems.Count != 0)
             {
                 SetParams();
 
-                SqlDataReader dataReader = null;
-
-                try
+                if (PN >= 1 && PN <= 25 && Temperature >= -70 && Temperature <= 300 && Diametr >= 15 && Diametr <= 2420)
                 {
-                    string str = lvEnvironment.SelectedItems[0].Text;
+                    SqlDataReader dataReader = null;
 
-                    SqlCommand sqlCommand = new SqlCommand($"SELECT DISTINCT MaterialOfSeal, EnvironmentOfSeal, TemperatureFrom, TemperatureTo, Pressure, Material, Type_seal FROM EnvironmentForMaterialOfSeal, TypeAndMaterialOfSeal WHERE EnvironmentOfSeal = N'{str}' AND Material LIKE '%' + MaterialOfSeal + '%' AND (TemperatureFrom <= {Temperature} OR TemperatureFrom is null) AND (TemperatureTo >= {Temperature} OR TemperatureTo is null) AND Pressure >= {Convert.ToInt32(PN)}", SqlConnection);
-
-                    dataReader = sqlCommand.ExecuteReader();
-
-                    ListViewItem item = null;
-
-                    while (dataReader.Read())
+                    try
                     {
-                        item = new ListViewItem(new string[] {Convert.ToString(dataReader["Type_seal"]),
+                        string str = lvEnvironment.SelectedItems[0].Text;
+
+                        SqlCommand sqlCommand = new SqlCommand($"SELECT DISTINCT tmp.Material, tmp.Type_seal FROM(SELECT DISTINCT MaterialOfSealCut, MaterialOfSeal, EnvironmentOfSeal, TemperatureFrom, TemperatureTo, Pressure, Material, Type_seal, DiametrDNFrom, DiametrDNTo FROM EnvironmentForMaterialOfSeal, TypeAndMaterialOfSeal, DesignOfPlateSeal WHERE EnvironmentOfSeal = N'{str}' AND Material LIKE '%' + MaterialOfSealCut + '%' AND (TemperatureFrom <= {Temperature} OR TemperatureFrom is null) AND (TemperatureTo >= {Temperature} OR TemperatureTo is null) AND Pressure >= {Convert.ToInt32(PN)} AND MaterialOfSeal LIKE '%' + MaterialOfSealCut + '%' AND DiametrDNFrom <= {Diametr} AND DiametrDNTo >= {Diametr} ) tmp", SqlConnection);
+
+                        dataReader = sqlCommand.ExecuteReader();
+
+                        ListViewItem item = null;
+
+                        while (dataReader.Read())
+                        {
+                            item = new ListViewItem(new string[] {Convert.ToString(dataReader["Type_seal"]),
                     Convert.ToString(dataReader["Material"])});
 
-                        lvMaterialOfSeal.Items.Add(item);
+                            lvMaterialOfSeal.Items.Add(item);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                    finally
+                    {
+                        if (dataReader != null && !dataReader.IsClosed)
+                            dataReader.Close();
                     }
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-                finally
-                {
-                    if (dataReader != null && !dataReader.IsClosed)
-                        dataReader.Close();
-                }
+                    
             }
+
+            // очистка списка исполнений, так как не выбран материал прокладки
+            lvDesign.Items.Clear();
         }
         private void Fm_Load(object sender, EventArgs e)
         {
@@ -312,6 +323,9 @@ namespace FlangeConnection
             // обновить список материалов прокладки, если выбрана среда
             if (lvEnvironment.SelectedItems.Count > 0)
                 changeListOfMaterialsOfSeal();
+            // обновить список исполнений прокладки, если выбран ее материал
+            if (lvMaterialOfSeal.SelectedItems.Count > 0)
+                changeListOfDesignSeal();
         }
 
         
@@ -335,7 +349,9 @@ namespace FlangeConnection
 
         private void tbDiametr_TextChanged(object sender, EventArgs e)
         {
-            changeListOfDesignSeal();
+            // обновить список материалов прокладки, если выбрана среда
+            if (lvEnvironment.SelectedItems.Count > 0)
+                changeListOfMaterialsOfSeal();
         }
     }
 }
