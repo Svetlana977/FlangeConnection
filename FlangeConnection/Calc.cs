@@ -15,13 +15,12 @@ namespace FlangeConnection
         internal float findWidthOfSeal(SqlConnection sqlConnection, int diametr, double pressure, string materialOfSeal, string DesignOfSeal)
         {
             float widthOfSeal = -1;
+            SqlCommand sqlCommand;
+            SqlDataReader dataReader = null;
 
             // проверка на материал прокладки
             if (materialOfSeal.Contains("паронит") || materialOfSeal.Contains("картон асбестовый") || materialOfSeal.Contains("резина") || materialOfSeal.Contains("фторопласт 4"))
             {
-                SqlCommand sqlCommand;
-                SqlDataReader dataReader = null;
-
                 try
                 {
                     // разные запросы в зависимости от исполнения прокладки
@@ -47,7 +46,7 @@ namespace FlangeConnection
                 }
                 catch (Exception ex)
                 {
-                    return -1;
+                    throw;
                 }
                 finally
                 {
@@ -98,13 +97,12 @@ namespace FlangeConnection
         internal int findCalculatedDiametr(SqlConnection sqlConnection, int diametr, double pressure, string materialOfSeal, string DesignOfSeal, float b_0)
         {
             int Diametr = -1;
+            SqlCommand sqlCommand;
+            SqlDataReader dataReader = null;
 
             // проверка на материал прокладки
             if (materialOfSeal.Contains("паронит") || materialOfSeal.Contains("картон асбестовый") || materialOfSeal.Contains("резина") || materialOfSeal.Contains("фторопласт 4"))
-            {
-                SqlCommand sqlCommand;
-                SqlDataReader dataReader = null;
-
+            {        
                 try
                 {
                     // разные запросы в зависимости от исполнения прокладки
@@ -130,7 +128,7 @@ namespace FlangeConnection
                 }
                 catch (Exception ex)
                 {
-                    return -1;
+                    throw;
                 }
                 finally
                 {
@@ -149,8 +147,69 @@ namespace FlangeConnection
             {
                 Diametr = ((int)(Convert.ToInt32(dataReader["D_"]) - b_0));
             }
-
             return dataReader;
+        }
+
+
+        // функция для вычисления усилия, необходимого для смятия прокладки при затяжке
+        internal float findTighteningForce(int d_cp, float b_0, SqlConnection sqlConnection, string material)
+        {
+            float P = -1;
+            int q_obzh_;
+            SqlDataReader dataReader = null;
+
+            try
+            {
+                SqlCommand sqlCommand = new SqlCommand($"SELECT q_obzh FROM TypeAndMaterialOfSeal WHERE Material LIKE N'{material}'", sqlConnection);
+
+                dataReader = sqlCommand.ExecuteReader();
+
+                while (dataReader.Read())
+                {
+                    q_obzh_ = Convert.ToInt32(dataReader["q_obzh"]);
+                    P = (float)(0.5 * Math.PI * d_cp * b_0 * q_obzh_);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            finally
+            {
+                if (dataReader != null && !dataReader.IsClosed)
+                    dataReader.Close();
+            }
+            return P;
+        }
+
+        internal float findForceUnderOperatingConditions(int d_cp, float b_0, double pressure, SqlConnection sqlConnection, string material)
+        {
+            float R = -1;
+            double coef_m;
+            SqlDataReader dataReader = null;
+
+            try
+            {
+                SqlCommand sqlCommand = new SqlCommand($"SELECT Coef_m FROM TypeAndMaterialOfSeal WHERE Material LIKE N'{material}'", sqlConnection);
+
+                dataReader = sqlCommand.ExecuteReader();
+
+                while (dataReader.Read())
+                {
+                    coef_m = Convert.ToDouble(dataReader["Coef_m"]);
+                    R = (float)(Math.PI * d_cp * b_0 * coef_m * pressure);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            finally
+            {
+                if (dataReader != null && !dataReader.IsClosed)
+                    dataReader.Close();
+            }
+            return R;
         }
     }
 }

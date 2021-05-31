@@ -23,6 +23,8 @@ namespace FlangeConnection
         private float b_0;
 
         public int D_cp { get; private set; }
+        public float P_obj { get; private set; }
+        public float R_p { get; private set; }
         public double PN { get; private set; }
         public int Temperature { get; private set; }
         public int Diametr { get; private set; }
@@ -367,20 +369,21 @@ namespace FlangeConnection
         {
             // вычисление ширины прокладки в зависимости от выбранного исполнения и материала прокладки
             b_p = calc.findWidthOfSeal(SqlConnection, Convert.ToInt32(tbDiametr.Text), Convert.ToDouble(tbPressure.Text), lvMaterialOfSeal.SelectedItems[0].SubItems[1].Text, lvDesign.SelectedItems[0].Text);
-            if (b_p == -1)
-                Debug.WriteLine("Ширина прокладки не вычислена");
-            else
-                Debug.WriteLine(b_p);
             // вычисление эффективной ширины прокладки
             b_0 = calc.findEffectWidthOfSeal(b_p);
             // вычисление расчетного диаметра плоских прокладок
             D_cp = calc.findCalculatedDiametr(SqlConnection, Convert.ToInt32(tbDiametr.Text), Convert.ToDouble(tbPressure.Text), lvMaterialOfSeal.SelectedItems[0].SubItems[1].Text, lvDesign.SelectedItems[0].Text, b_0);
             // усилие необходимое для смятия прокладки при затяжке
-            //P_obj = calc.findTighteningForce()
-            
-            richTextBox1.Text = $"ширина прокладки = {b_p}\n" +
-                $"эффективная ширина = {b_0}\n" +
-                $"расчетный диаметр = {D_cp}\n";
+            P_obj = calc.findTighteningForce(D_cp, b_0, SqlConnection, lvMaterialOfSeal.SelectedItems[0].SubItems[1].Text);
+            // усилие на прокладке в рабочих условиях,
+            // необходимое для обеспечения герметичности фланцевого соединения
+            R_p = calc.findForceUnderOperatingConditions(D_cp, b_0, Convert.ToDouble(tbPressure.Text), SqlConnection, lvMaterialOfSeal.SelectedItems[0].SubItems[1].Text);
+
+            richTextBox1.Text = $"Ширина прокладки = {b_p} мм\n" +
+                $"Эффективная ширина = {b_0} мм\n" +
+                $"Расчетный диаметр = {D_cp} мм\n" +
+                $"Усилие необходимое для смятия прокладки при затяжке = {P_obj} Н\n" +
+                $"Усилие на прокладке в рабочих условиях, необходимое для обеспечения герметичности фланцевого соединения = {R_p} Н\n";
         }
     }
 }
