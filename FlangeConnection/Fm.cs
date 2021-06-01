@@ -320,7 +320,7 @@ namespace FlangeConnection
             if (!Char.IsDigit(number) && number != 8) 
             {
                 e.Handled = true;
-            }
+            }            
         }
 
         private void lvEnvironment_SelectedIndexChanged_1(object sender, EventArgs e)
@@ -353,7 +353,7 @@ namespace FlangeConnection
         }
 
         private void tbDiametr_TextChanged(object sender, EventArgs e)
-        {
+        {           
             // обновить список материалов прокладки, если выбрана среда
             if (lvEnvironment.SelectedItems.Count > 0)
                 changeListOfMaterialsOfSeal();
@@ -385,5 +385,6 @@ namespace FlangeConnection
                 $"Усилие необходимое для смятия прокладки при затяжке = {P_obj} Н\n" +
                 $"Усилие на прокладке в рабочих условиях, необходимое для обеспечения герметичности фланцевого соединения = {R_p} Н\n";
         }
+
     }
 }

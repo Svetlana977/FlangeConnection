@@ -27,7 +27,12 @@ namespace FlangeConnection
                     switch (DesignOfSeal)
                     {
                         case "плоскость":
-                            widthOfSeal = 14; // исправить!!!!
+                            sqlCommand = requestForPloskostSeal(sqlConnection, diametr, pressure);
+                            dataReader = sqlCommand.ExecuteReader();
+                            while (dataReader.Read())
+                            {
+                                widthOfSeal = (Convert.ToInt32(dataReader["Type01_D"]) - Convert.ToInt32(dataReader["d"])) / 2;
+                            }
                             break;
                         case "соединительный выступ - соединительный выступ":
                         case "соединительный выступ - паз":
@@ -55,6 +60,11 @@ namespace FlangeConnection
                 }
             }
             return widthOfSeal;
+        }
+
+        private SqlCommand requestForPloskostSeal(SqlConnection sqlConnection, int diametr, double pressure)
+        {
+            return new SqlCommand($"SELECT Type01_D, d FROM(SELECT Type01_DN, Type01_PN, Type01_D, D_, d, RANK() OVER(ORDER BY Type01_PN ASC) rnk1  FROM(SELECT Type01_D, Type01_DN, Type01_PN, DN, D_, d, Ftoroplast, Design, RANK() OVER(ORDER BY DN DESC) rnk FROM SizeOfPlateSeal, FlangeSizeType01 WHERE Ftoroplast IS NULL  AND Design = N'соединительный выступ - соединительный выступ' AND DN <= {diametr} AND PNfrom <= {convertPressureToPN(pressure).ToString().Replace(',', '.')} AND PNto >= {convertPressureToPN(pressure).ToString().Replace(',', '.')} AND Type01_DN LIKE DN AND Type01_PN >= {convertPressureToPN(pressure).ToString().Replace(',', '.')}) cte1 WHERE rnk = 1) cte2 WHERE rnk1 = 1; ", sqlConnection);
         }
 
         // запрос для прокладки из фторопласта шип - паз
@@ -109,7 +119,12 @@ namespace FlangeConnection
                     switch (DesignOfSeal)
                     {
                         case "плоскость":
-                            Diametr = 140; // исправить!!!!
+                            sqlCommand = requestForPloskostSeal(sqlConnection, diametr, pressure);
+                            dataReader = sqlCommand.ExecuteReader();
+                            while (dataReader.Read())
+                            {
+                                Diametr = ((int)(Convert.ToInt32(dataReader["Type01_D"]) - b_0));
+                            }
                             break;
                         case "соединительный выступ - соединительный выступ":
                         case "соединительный выступ - паз":
@@ -182,6 +197,8 @@ namespace FlangeConnection
             return P;
         }
 
+        // усилие на прокладке в рабочих условиях,
+        // необходимое для обеспечения герметичности фланцевого соединения
         internal float findForceUnderOperatingConditions(int d_cp, float b_0, double pressure, SqlConnection sqlConnection, string material)
         {
             float R = -1;
