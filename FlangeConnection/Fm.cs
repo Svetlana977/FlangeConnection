@@ -19,6 +19,7 @@ namespace FlangeConnection
     {
         private SqlConnection SqlConnection = null;
         private Calc calc;
+
         private float b_p;
         private float b_0;
 
@@ -367,6 +368,8 @@ namespace FlangeConnection
         // 5 пункт по ГОСТ 34233.4-2017 по расчету фланцевого соединения на прочность и герметичность
         private void calcPoint5()
         {
+            SetParams();
+            richTextBox1.Clear();
             // вычисление ширины прокладки в зависимости от выбранного исполнения и материала прокладки
             b_p = calc.findWidthOfSeal(SqlConnection, Convert.ToInt32(tbDiametr.Text), Convert.ToDouble(tbPressure.Text), lvMaterialOfSeal.SelectedItems[0].SubItems[1].Text, lvDesign.SelectedItems[0].Text);
             // вычисление эффективной ширины прокладки
@@ -379,11 +382,11 @@ namespace FlangeConnection
             // необходимое для обеспечения герметичности фланцевого соединения
             R_p = calc.findForceUnderOperatingConditions(D_cp, b_0, Convert.ToDouble(tbPressure.Text), SqlConnection, lvMaterialOfSeal.SelectedItems[0].SubItems[1].Text);
 
-            richTextBox1.Text = $"Ширина прокладки = {b_p} мм\n" +
+            richTextBox1.AppendText($"Ширина прокладки = {b_p} мм\n" +
                 $"Эффективная ширина = {b_0} мм\n" +
                 $"Расчетный диаметр = {D_cp} мм\n" +
                 $"Усилие необходимое для смятия прокладки при затяжке = {P_obj} Н\n" +
-                $"Усилие на прокладке в рабочих условиях, необходимое для обеспечения герметичности фланцевого соединения = {R_p} Н\n";
+                $"Усилие на прокладке в рабочих условиях, необходимое для обеспечения герметичности фланцевого соединения = {R_p} Н\n");
         }
 
     }
