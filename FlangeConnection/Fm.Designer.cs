@@ -65,6 +65,7 @@ namespace FlangeConnection
             this.guna2ShadowPanel1 = new Guna.UI2.WinForms.Guna2ShadowPanel();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.guna2HtmlLabel3 = new Guna.UI2.WinForms.Guna2HtmlLabel();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.guna2GradientPanel1.SuspendLayout();
             this.guna2Panel1.SuspendLayout();
             this.panelMaterialOfSeal.SuspendLayout();
@@ -310,6 +311,7 @@ namespace FlangeConnection
             this.buExport.Size = new System.Drawing.Size(128, 40);
             this.buExport.TabIndex = 5;
             this.buExport.Text = "Экспорт .pdf";
+            this.buExport.Click += new System.EventHandler(this.buExport_Click);
             // 
             // panelMaterial
             // 
@@ -662,6 +664,7 @@ namespace FlangeConnection
         private Guna.UI2.WinForms.Guna2TextBox tbS;
         private System.Windows.Forms.RichTextBox tbOutput;
         private System.Windows.Forms.ColumnHeader columnHeader6;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }
 

@@ -12,6 +12,10 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.IO;
+using Font = System.Drawing.Font;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 
 namespace FlangeConnection
 {
@@ -389,5 +393,43 @@ namespace FlangeConnection
                 $"Усилие на прокладке в рабочих условиях, необходимое для обеспечения герметичности фланцевого соединения = {R_p} Н\n");
         }
 
+        private void buExport_Click(object sender, EventArgs e)
+        {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            var enc1252 = Encoding.GetEncoding(1252);
+
+            string ttf = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "ARIAL.TTF");
+            var baseFont = BaseFont.CreateFont(ttf, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+            var font = new iTextSharp.text.Font(baseFont, iTextSharp.text.Font.DEFAULTSIZE, iTextSharp.text.Font.NORMAL);
+            var fontParag = new iTextSharp.text.Font(baseFont, 20);
+            var fontTitle = new iTextSharp.text.Font(baseFont, 24);
+
+            Document doc = new Document(PageSize.A4, 10f, 10f, 100f, 0f);
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                string pdfFilePath = saveFileDialog1.FileName + ".pdf";
+
+                var fs = new FileStream(pdfFilePath, FileMode.Create);
+
+                doc.NewPage();
+                var writer = PdfWriter.GetInstance(doc, fs);
+
+                doc.Open();
+                doc.NewPage();
+
+                using (var stream = new FileStream("Test.pdf", FileMode.Create))
+                {
+                    PdfWriter.GetInstance(doc, stream);
+                    doc.Open();
+
+                    doc.Add(new Paragraph($"{richTextBox1.Text}", font));
+
+                    doc.Close();
+                }
+            }
+
+            MessageBox.Show("Файл сохранен");
+        }
     }
 }
