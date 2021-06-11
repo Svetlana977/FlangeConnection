@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FlangeConnection
 {
-    class Calc
+    public class Calc
     {        
         // вычисление ширины прокладки по данным из базы
         internal float findWidthOfSeal(SqlConnection sqlConnection, int diametr, double pressure, string materialOfSeal, string DesignOfSeal)
@@ -98,7 +98,7 @@ namespace FlangeConnection
         }
 
         // поиск эффективной ширины плоской прокладки
-        internal float findEffectWidthOfSeal(float b_p)
+        public float findEffectWidthOfSeal(float b_p)
         {
             return (float)Math.Round(b_p <= 15 ? b_p : 3.8 * Math.Sqrt(b_p));
         }
