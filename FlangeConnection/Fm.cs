@@ -40,7 +40,8 @@ namespace FlangeConnection
             InitializeComponent();
 
             calc = new Calc();
-
+            richTextBox1.SelectionIndent = 10;
+            richTextBox1.SelectionRightIndent = 10;
 
             buExit.Click += (s, e) => Application.Exit();
         }
@@ -404,7 +405,7 @@ namespace FlangeConnection
             var fontParag = new iTextSharp.text.Font(baseFont, 20);
             var fontTitle = new iTextSharp.text.Font(baseFont, 24);
 
-            Document doc = new Document(PageSize.A4, 10f, 10f, 100f, 0f);
+            Document doc = new Document(PageSize.A4);
 
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
